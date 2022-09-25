@@ -49,3 +49,17 @@ export const logoutUserAsync = () => async (dispatch) => {
     console.log('Auth failed:', e);
   }
 };
+
+export const signupUserAsync = (data, setLoading) => async (dispatch) => {
+  dispatch({ type: 'INIT_SIGNUP' });
+  try {
+    const res = await axios.post('/api/auth/signup', data);
+    dispatch(setAuth(res.data));
+    dispatch(setAuthPages());
+  } catch (e) {
+    setLoading(false);
+    dispatch(setAuthEmpty());
+    dispatch(setPublicPages());
+    console.log('Auth failed:', e);
+  }
+};
