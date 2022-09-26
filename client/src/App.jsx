@@ -10,11 +10,19 @@ import SignupPage from './components/pages/SignupPage/SignupPage';
 import ProtectedRoute from './components/routing/ProtectedRoute';
 import NavBar from './components/ui/NavBar';
 import { checkAuthAsync } from './redux/actions/authActions';
+import { socketInit } from './redux/actions/wsActions';
 
 function App() {
   const authUser = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
   useEffect(() => {
+    // Если юзер авторизован, диспатчим инициализацию ws в Саги
+    if (authUser?.id) {
+      dispatch(socketInit());
+    }
+  }, [authUser]);
+  useEffect(() => {
+    // Проверка авторизации
     dispatch(checkAuthAsync());
   }, []);
   return (
@@ -30,6 +38,14 @@ function App() {
           <Route element={<ProtectedRoute isAllowed={!!authUser?.id} />}>
             <Route path="/posts" element={<PostsPage />} />
           </Route>
+          <Route
+            path="/admin"
+            element={(
+              <ProtectedRoute isAllowed={!!authUser?.id && authUser.role === 'admin'}>
+                <PostsPage />
+              </ProtectedRoute>
+            )}
+          />
         </Routes>
       </LoaderWrapper>
     </Container>

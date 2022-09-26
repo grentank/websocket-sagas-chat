@@ -2,22 +2,21 @@ import {
   Grid, List, ListItem, ListItemButton, ListItemText, Paper,
 } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 export default function UsersList() {
-  const users = ['1', '2', '3', '4'];
+  const chatUsers = useSelector((state) => state.chatUsers);
   return (
     <Grid item xs={3}>
-      <Paper variant="outlined" elevation={20}>
-        <List>
-          {users.map((el) => (
-            <ListItem>
-              <ListItemButton>
-                <ListItemText primary={el}>{el}</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
+      <List>
+        {chatUsers.map((user) => (
+          <ListItem key={user.id}>
+            <ListItemButton>
+              <ListItemText primary={user.name}>{user.name}</ListItemText>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
     </Grid>
   );
 }

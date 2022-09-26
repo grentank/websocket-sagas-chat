@@ -2,17 +2,23 @@ import {
   Box, Button, Grid, Input,
 } from '@mui/material';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { sendChatMessage } from '../../../redux/actions/chatActions';
 
 export default function MessageForm() {
   const [input, setInput] = useState('');
+  const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
+    // На отправку формы диспатчим в слушатель Саги userMessage новое сообщение
+    dispatch(sendChatMessage({ message: input }));
+    setInput('');
   };
   return (
     <Grid
       item
       xs={12}
-      direction="col"
+      flexDirection="col"
       justifyContent="center"
       alignItems="center"
     >

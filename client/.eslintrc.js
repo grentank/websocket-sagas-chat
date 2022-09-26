@@ -22,5 +22,8 @@ module.exports = {
     'no-restricted-exports': 0,
     'no-console': 0,
     'react/prop-types': 0,
+    'no-param-reassign': 0,
+    'no-unused-vars': 0,
+    'func-names': 0,
   },
 };

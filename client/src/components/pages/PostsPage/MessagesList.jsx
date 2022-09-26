@@ -2,20 +2,19 @@ import {
   Grid, List, ListItem, ListItemButton, ListItemText, Paper,
 } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 export default function MessagesList() {
-  const messages = ['1u', '2u', '3u', '4u'];
+  const chatMessages = useSelector((state) => state.chatMessages);
   return (
     <Grid item xs={8} sx={{ marginLeft: 2 }}>
       <List>
-        {messages.map((el) => (
-          <Paper variant="outlined" elevation={20}>
-            <ListItem>
-              <ListItemButton>
-                <ListItemText primary={el}>{el}</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </Paper>
+        {chatMessages.map((el) => (
+          <ListItem key={el.msId}>
+            <ListItemButton>
+              <ListItemText primary={el.message} secondary={el.name} />
+            </ListItemButton>
+          </ListItem>
         ))}
       </List>
     </Grid>
